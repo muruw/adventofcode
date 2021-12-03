@@ -1,14 +1,10 @@
 package _2021.day2_dive;
 
+import _2021.util.Utils;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Dive {
   final List<String> VERTICAL_DIRECTIONS = List.of("down", "up");
@@ -17,7 +13,7 @@ public class Dive {
 
   public static void main(String[] args) throws IOException, URISyntaxException {
     Dive dive = new Dive();
-    List<String> fileRows = readStepsFromResourceFile("/2021/dive");
+    List<String> fileRows = Utils.readLinesFromResourceFile("/2021/dive", Dive.class);
     Map<String, Integer> directionAndDepth = dive.readDepthAndHorizontalValue(fileRows);
     Map<String, Integer> updatedDirectionAndDepth = dive.readDepthAndHorizontalValueUpdated(fileRows);
     // Task 1
@@ -26,14 +22,6 @@ public class Dive {
     System.out.println(updatedDirectionAndDepth.get("horizontalValue") * updatedDirectionAndDepth.get("depth"));
   }
 
-  private static List<String> readStepsFromResourceFile(String resourceFileName) throws IOException, URISyntaxException {
-    URL resource = Dive.class.getResource(resourceFileName);
-    List<String> result;
-    try (Stream<String> lines = Files.lines(Paths.get(resource.toURI()))) {
-      result = lines.collect(Collectors.toList());
-    }
-    return result;
-  }
   // task 1
   private Map<String, Integer> readDepthAndHorizontalValue(List<String> directionsAndDepths) throws IOException, URISyntaxException {
     int horizontalPos = 0;

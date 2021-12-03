@@ -1,32 +1,19 @@
 package _2021.day1_sonar_sweep;
 
+import _2021.util.Utils;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class SonarSweep {
-  public static void main(String[] args) throws IOException, URISyntaxException {
+  public static void main(String[] args) throws URISyntaxException, IOException {
     SonarSweep sonarSweep = new SonarSweep();
     sonarSweep.sonarSweep("/2021/sonarsweep");
     sonarSweep.sonarSweepThreeMeasurementSlidingWindow("/2021/sonarsweep");
   }
 
-  private List<String> readSeaFloorMeasurementsFromFile(String resourceFileName) throws IOException, URISyntaxException {
-    URL resource = SonarSweep.class.getResource(resourceFileName);
-    List<String> result;
-    try (Stream<String> lines = Files.lines(Paths.get(resource.toURI()))) {
-      result = lines.collect(Collectors.toList());
-    }
-    return result;
-  }
-
-  public void sonarSweep(String resourceFileName) throws IOException, URISyntaxException {
-    List<String> seaFloorMeasurements = readSeaFloorMeasurementsFromFile(resourceFileName);
+  public void sonarSweep(String resourceFileName) throws URISyntaxException, IOException {
+    List<String> seaFloorMeasurements = Utils.readLinesFromResourceFile(resourceFileName, SonarSweep.class);
     System.out.println(seaFloorMeasurements.get(0) + " (N/A - no previous sum)");
     int total = 0;
     for (int i = 1; i < seaFloorMeasurements.size(); i++) {
@@ -40,8 +27,8 @@ public class SonarSweep {
     System.out.println("How many measurements are larger than the previous measurement? " + total);
   }
 
-  public void sonarSweepThreeMeasurementSlidingWindow(String resourceFileName) throws IOException, URISyntaxException {
-    List<String> seaFloorMeasurements = readSeaFloorMeasurementsFromFile(resourceFileName);
+  public void sonarSweepThreeMeasurementSlidingWindow(String resourceFileName) throws URISyntaxException, IOException {
+    List<String> seaFloorMeasurements = Utils.readLinesFromResourceFile(resourceFileName, SonarSweep.class);
 
     int firstElement = Integer.parseInt(seaFloorMeasurements.get(0));
     int secondElement = Integer.parseInt(seaFloorMeasurements.get(1));
